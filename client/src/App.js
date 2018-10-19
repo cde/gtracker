@@ -5,20 +5,18 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
+import SignUp from "./components/auth/Signup";
 
 class App extends Component {
   render() {
     return (
         <Router>
           <div className="App">
-            <Navbar />
+            <Navbar/>
               <Switch>
                   <Route exact path="/" component={Landing} />
-                  <div className="container">
-                      <Route exact path="/signup" component={Signup}/>
-                      <Route exact path="/login" component={Login}/>
-                  </div>
+                  <Route exact path="/signup" component={SignUp}/>
+                  <Route exact path="/login" component={Login}/>
               </Switch>
             <Footer/>
           </div>

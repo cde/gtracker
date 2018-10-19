@@ -11,7 +11,7 @@ module.exports = function validateCreateInput(data){
     data.password_confirmation = !isEmpty(data.password_confirmation) ? data.password_confirmation : '';
 
     if (Validator.isEmpty(data.username)) {
-        errors.username = 'Profile username is required';
+        errors.username = 'Username is required';
     }
     if (!Validator.isLength(data.username, { min: 3, max: 40 })) {
         errors.username = 'Username needs to be between 3 and 40 characters';

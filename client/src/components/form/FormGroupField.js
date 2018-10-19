@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import { FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const FormGroupField = ({
@@ -11,12 +12,15 @@ const FormGroupField = ({
     type,
     onChange,
     disabled
-}) =>  {
+}) => {
     return (
         <FormGroup>
-            <Label for="exampleEmail">{label}</Label>
+            <Label for={name}>{label}</Label>
             <Input
                 type={type}
+                className={classnames('form-control form-control-lg', {
+                    'is-invalid': error
+                })}
                 placeholder={placeholder}
                 name={name}
                 value={value}
@@ -24,13 +28,9 @@ const FormGroupField = ({
                 disabled={disabled}
             />
             {info && <FormText className="text-muted">{info}</FormText>}
-            {error && <FormText className="invalid-feedback">{error}</FormText>}
+            {error && <FormText className="invalid-feedback" color='#dc3545'>{error}</FormText>}
         </FormGroup>
     )
-}
-
-FormGroupField.defaultProps = {
-    type: 'text'
 };
 
 export default FormGroupField;

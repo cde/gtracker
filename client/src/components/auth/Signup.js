@@ -30,13 +30,15 @@ class Signup extends Component {
         // console.log(newUser);
         axios.post('/api/users/create', newUser)
             .then(res => console.log(res.data))
-            .catch(err => console.log(err.response.data))
+            .catch(err => {
+                this.setState({ errors: err.response.data })
+            })
     }
 
     render() {
         const { errors } = this.state;
         return (
-            <div className="sigup">
+            <div className="signup">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">

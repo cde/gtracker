@@ -25,6 +25,7 @@ class Login extends Component {
         console.log(user);
     }
     render() {
+        const { errors } = this.state;
         return (
             <div className="login">
                 <div className="container">
@@ -38,7 +39,7 @@ class Login extends Component {
                                     type="email"
                                     value={this.state.email}
                                     onChange={this.handleInputChange}
-                                    // error={errors.email}
+                                    error={errors.email}
                                     info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
                                 />
                                 <FormGroupField
