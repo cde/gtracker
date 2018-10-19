@@ -14,28 +14,31 @@ const validateLoginInput = require('../../utils/login');
 // Load Model
 const User = require("../../models/User");
 
-// @route GET api/users/
-// @desc Register user
-// @access public
-
-router.get('/', (req, res) => res.json({
-    msg: 'It works'
-}))
-
 // @route POST api/users/create
 // @desc Create user
 // @access public
 
 router.post('/create', (req, res) => {
+    console.log(req.body);
+
     const { errors, isValid } = validateCreateInput(req.body);
 
     if(!isValid) {
         return res.status(400).json(errors)
     }
 
-    User.findOne({ email: req.body.email }).then(user => {
+    // User.findOne({ email: req.body.email })
+    const emailRequest = req.body.email;
+    const usernameRequest = req.body.username;
+
+    User.findOne({$or: [{email: emailRequest}, {username: usernameRequest}]}).then(user => {
         if (user) {
-            errors.email = 'Email already exists'
+            if(user.email === emailRequest) {
+                errors.email = 'Email already exists';
+            }
+            if(user.username === usernameRequest) {
+                errors.username = 'Username already exists';
+            }
             return res.status(400).json(errors);
         } else {
             const avatar = gravatar.url(req.body.email, {
@@ -45,8 +48,7 @@ router.post('/create', (req, res) => {
             });
 
             const newUser = new User({
-                firstName: req.body.first_name,
-                lastName: req.body.last_name,
+                username: req.body.username,
                 email: req.body.email,
                 profile: avatar,
                 password: req.body.password
@@ -92,8 +94,8 @@ router.post('/login', (req, res) => {
                 .then(isMatch => {
                     if(isMatch) {
                         // res.json({msg: 'match!'})
-                        const payload = { id: user.id, firstName: user.firstName, avatar: user.profile };
-                        jwt.sign(payload, keys.secretOrKey, { expiresIn: 14400 }, (err, token) => {
+                        const payload = { id: user.id, username: user.username, avatar: user.avatar };
+                        jwt.sign(payload, keys.secretOrKey, { expiresIn: 86400 }, (err, token) => {
                             res.json({
                                 success: true,
                                 token: 'Bearer ' + token
@@ -117,7 +119,7 @@ router.get(
     (req, res) => {
         res.json({
             id: req.user.id,
-            name: req.user.name,
+            name: req.user.username,
             email: req.user.email
         });
     }

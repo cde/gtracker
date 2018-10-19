@@ -10,14 +10,13 @@ class Landing extends Component {
             <div className="row">
               <div className="col-md-12 text-center">
                   <div className="enlace">
-                    <h1 className="display-3 mb-4" >Coder Enlace</h1>
+                    <h1 className="display-3 mb-4" >Coders Enlace</h1>
                     <p className="lead ">
                       {' '}
                       Create a developer profile/portfolio, share posts, your favorite tech stack and events.
                       <br/>
                       Get a personalized feed of the latest news for your tech stack
-                      <br/>
-                       Get a personalized feed of your favorite developers
+
                     </p>
                   </div>
                 <hr />

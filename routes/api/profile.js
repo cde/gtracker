@@ -9,7 +9,7 @@ const Profile = require("../../models/Profile");
 
 // Validations
 const validateProfileInput = require('../../utils/profile');
-const validateExperienceInput = require('../../utils/experience');validateExperienceInput
+const validateExperienceInput = require('../../utils/experience');
 
 
 // *** PROFILE ***
@@ -115,7 +115,8 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         // Get fields
         const profileFields = {};
         profileFields.user = req.user.id;
-        if (req.body.username) profileFields.username = req.body.username;
+        if (req.body.first_name) profileFields.firstName = req.body.first_name;
+        if (req.body.last_name) profileFields.lastName = req.body.last_name;
         if (req.body.company) profileFields.company = req.body.company;
         if (req.body.website) profileFields.website = req.body.website;
         if (req.body.location) profileFields.location = req.body.location;
@@ -137,6 +138,7 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
         if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
+        console.log(profileFields);
         Profile.findOne({ user: req.user.id }).then(profile => {
             if(profile) {
                 Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})
