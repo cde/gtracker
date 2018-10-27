@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
+import { withRouter } from 'react-router-dom';
+
 import FormGroupField from './../form/FormGroupField';
 
 class Login extends Component {
@@ -7,6 +12,21 @@ class Login extends Component {
         password: '',
         errors: {}
     };
+
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dasboard')
+        }
+    }
+    // This runs when component receives new properties
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+        if(nextProps.errors){
+            this.setState({ errors: nextProps.errors })
+        }
+    }
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -23,6 +43,7 @@ class Login extends Component {
             password: this.state.password,
         }
         console.log(user);
+        this.props.loginUser(user);
     }
     render() {
         const { errors } = this.state;
@@ -48,7 +69,7 @@ class Login extends Component {
                                     type="password"
                                     value={this.state.password}
                                     onChange={this.handleInputChange}
-                                    // error={errors.password}
+                                    error={errors.password}
                                 />
                                 <input type="submit" className="btn btn-info btn-block mt-4"/>
                             </form>
@@ -58,7 +79,16 @@ class Login extends Component {
             </div>
         )
     }
-
 }
 
-export default Login;
+Login.propTypes = {
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+});
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));

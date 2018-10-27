@@ -50,8 +50,8 @@ router.post('/create', (req, res) => {
             const newUser = new User({
                 username: req.body.username,
                 email: req.body.email,
-                profile: avatar,
-                password: req.body.password
+                avatar: avatar,
+                password: req.body.password,
             });
 
             bcrypt.genSalt(10, (err, salt) => {

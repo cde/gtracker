@@ -16,6 +16,11 @@ class Signup extends Component {
         errors: {}
     };
 
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/dasboard')
+        }
+    }
     // This runs when component receives new properties
     componentWillReceiveProps(nextProps) {
         if(nextProps.errors){
@@ -104,7 +109,7 @@ Signup.propTypes = {
     auth: PropTypes.object.isRequired,
     createUser: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = (state) => ({
     auth: state.auth,
