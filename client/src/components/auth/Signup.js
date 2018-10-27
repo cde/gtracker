@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+// import axios from 'axios';
 import FormGroupField from './../form/FormGroupField';
+
+import { connect } from 'react-redux';
+import { createUser } from '../../actions/authActions';
 
 class Signup extends Component {
     state = {
@@ -28,15 +32,17 @@ class Signup extends Component {
             password_confirmation: this.state.password_confirmation
         }
         // console.log(newUser);
-        axios.post('/api/users/create', newUser)
-            .then(res => console.log(res.data))
-            .catch(err => {
-                this.setState({ errors: err.response.data })
-            })
-    }
+        this.props.createUser(newUser);
+        // axios.post('/api/users/create', newUser)
+        //     .then(res => console.log(res.data))
+        //     .catch(err => {
+        //         this.setState({ errors: err.response.data })
+        //     })
+    };
 
     render() {
         const { errors } = this.state;
+        const { user } = this.props.auth;
         return (
             <div className="signup">
                 <div className="container">
@@ -90,4 +96,12 @@ class Signup extends Component {
 
 }
 
-export default Signup;
+Signup.propTypes = {
+    auth: PropTypes.object.isRequired,
+    createUser: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
+export default connect(mapStateToProps, { createUser })(Signup);
