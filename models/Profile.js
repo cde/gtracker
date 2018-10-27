@@ -8,11 +8,11 @@ const ProfileSchema = new Schema({
     },
     firstName: { type: String,  required: true },
     lastName: { type: String,  required: true },
-    // username: {
-    //     type: String,
-    //     require: true,
-    //     max: 40
-    // },
+    username: {
+        type: String,
+        require: true,
+        max: 40
+    },
     company: { type: String },
     website: { type: String },
     bio: { type: String },

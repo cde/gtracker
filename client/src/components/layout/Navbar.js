@@ -17,11 +17,11 @@ class Navbar extends Component {
         const authLinks = (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <a href="#" onClick={this.logoutClick} className="nav-link">
+                    <a href="" onClick={this.logoutClick} className="nav-link">
                         <img
                             className="rounded-circle"
                             src={user.avatar}
-                            alt={user.name}
+                            alt={user.username}
                             style={{ width: '25px', marginRight: '5px' }}
                             title= "Connect gravatar to your email to display an image"
                         />{' '}
@@ -75,12 +75,10 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
-    auth: PropTypes
-}
+    auth: PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => ({
     auth: state.auth
 });
-export default connect(mapStateToProps, { logoutUser })(
-    Navbar
-);
+export default connect(mapStateToProps, { logoutUser })(Navbar);

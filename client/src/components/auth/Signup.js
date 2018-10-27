@@ -18,7 +18,7 @@ class Signup extends Component {
 
     componentDidMount(){
         if(this.props.auth.isAuthenticated){
-            this.props.history.push('/dasboard')
+            this.props.history.push('/workspace')
         }
     }
     // This runs when component receives new properties
@@ -44,7 +44,6 @@ class Signup extends Component {
             password_confirmation: this.state.password_confirmation
         };
         // console.log(newUser);
-
         // along with withRouter(Signup), this.props.history is used to redirect from within this action
         this.props.createUser(newUser, this.props.history);
 

@@ -17,7 +17,6 @@ import SignUp from "./components/auth/Signup";
 import './App.css';
 
 // Check for tokens
-
 if(localStorage.jwtToken) {
     // set auth header
     const jwtToken = localStorage.jwtToken;

@@ -15,13 +15,13 @@ class Login extends Component {
 
     componentDidMount(){
         if(this.props.auth.isAuthenticated){
-            this.props.history.push('/dasboard')
+            this.props.history.push('/workspace')
         }
     }
     // This runs when component receives new properties
     componentWillReceiveProps(nextProps) {
         if(nextProps.auth.isAuthenticated) {
-            this.props.history.push('/dashboard');
+            this.props.history.push('/workspace');
         }
         if(nextProps.errors){
             this.setState({ errors: nextProps.errors })
@@ -44,7 +44,7 @@ class Login extends Component {
         }
         console.log(user);
         this.props.loginUser(user);
-    }
+    };
     render() {
         const { errors } = this.state;
         return (
