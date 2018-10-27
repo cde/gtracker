@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
-import FormGroupField from './../form/FormGroupField';
-
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { createUser } from '../../actions/authActions';
+
+import FormGroupField from './../form/FormGroupField';
 
 class Signup extends Component {
     state = {
@@ -15,6 +16,13 @@ class Signup extends Component {
         errors: {}
     };
 
+    // This runs when component receives new properties
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.errors){
+            this.setState({ errors: nextProps.errors })
+        }
+    }
+
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({
@@ -23,26 +31,22 @@ class Signup extends Component {
     };
 
     onSubmit = event => {
-        console.log(event);
         event.preventDefault();
         const newUser = {
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
             password_confirmation: this.state.password_confirmation
-        }
+        };
         // console.log(newUser);
-        this.props.createUser(newUser);
-        // axios.post('/api/users/create', newUser)
-        //     .then(res => console.log(res.data))
-        //     .catch(err => {
-        //         this.setState({ errors: err.response.data })
-        //     })
+
+        // along with withRouter(Signup), this.props.history is used to redirect from within this action
+        this.props.createUser(newUser, this.props.history);
+
     };
 
     render() {
         const { errors } = this.state;
-        const { user } = this.props.auth;
         return (
             <div className="signup">
                 <div className="container">
@@ -98,10 +102,12 @@ class Signup extends Component {
 
 Signup.propTypes = {
     auth: PropTypes.object.isRequired,
-    createUser: PropTypes.func.isRequired
+    createUser: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    auth: state.auth,
+    errors: state.errors
 });
-export default connect(mapStateToProps, { createUser })(Signup);
+export default connect(mapStateToProps, { createUser })(withRouter(Signup));

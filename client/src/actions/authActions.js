@@ -1,8 +1,19 @@
-import {TEST_DISPATCH} from "./types";
+import axios from 'axios';
+import {GET_ERRORS} from "./types";
 
-export const createUser = (userData) => {
-    return {
-        type: TEST_DISPATCH,
-        payload: userData
-    }
-}
+
+// we're dealing with asynchronous data we're fetching from
+// our back end we have to wait for the response and
+// then we're going to dispatch.
+// we will use thunk middleware here (dispatch)
+export const createUser = (userData, history) => dispatch => {
+
+    axios.post('/api/users/create', userData)
+        .then(res => history.push('/login'))
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};

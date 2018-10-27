@@ -138,7 +138,7 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
         if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
-        console.log(profileFields);
+        console.log('profileFields ', profileFields);
         Profile.findOne({ user: req.user.id }).then(profile => {
             if(profile) {
                 Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})
