@@ -19,7 +19,6 @@ export const isProfileLoading = () => {
     return { type: PROFILE_LOADING }
 };
 
-
 export const clearCurrentProfile = () => {
     return { type: CLEAR_CURRENT_PROFILE }
 };

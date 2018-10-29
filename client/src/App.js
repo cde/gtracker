@@ -17,6 +17,7 @@ import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/Signup";
 import Workspace from "./components/workspace/Workspace";
+import CreateProfile from "./components/create-profile/CreateProfile";
 
 import './App.css';
 
@@ -46,11 +47,15 @@ class App extends Component {
             <Router>
               <div className="App">
                   <Navbar/>
+
+                  <Route exact path="/" component={Landing} />
+                  <Route exact path="/signup" component={SignUp}/>
+                  <Route exact path="/login" component={Login}/>
                   <Switch>
-                      <Route exact path="/" component={Landing} />
-                      <Route exact path="/signup" component={SignUp}/>
-                      <Route exact path="/login" component={Login}/>
                       <PrivateRoute exact path="/workspace" component={Workspace}/>
+                  </Switch>
+                  <Switch>
+                      <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
                   </Switch>
                   <Footer/>
               </div>
