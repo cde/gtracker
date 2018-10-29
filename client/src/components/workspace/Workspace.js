@@ -26,9 +26,9 @@ class Workspace extends Component {
             }else {
                 workspaceContent = (
                     <div>
-                        <p className="lead text-muted">{user.firstName}</p>
+                        <p className="lead text-muted">Welcome {user.username}</p>
                         <p> You haven't setup a profile yet. We would love to know you better. Please add some info.</p>
-                        <Link to={`/profile/${profile.username}`}>{user.firstName}</Link>
+                        <Link to="/create-profile" className="btn btn-lg btn-info ">Create Profile</Link>
                     </div>
                 )
             }

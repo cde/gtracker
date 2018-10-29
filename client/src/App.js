@@ -10,6 +10,7 @@ import store from './store';
 
 
 // **** Routes ****
+import PrivateRoute from './components/misc/PrivateRoute';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from "./components/layout/Landing";
@@ -44,14 +45,14 @@ class App extends Component {
         <Provider store={store}>
             <Router>
               <div className="App">
-                <Navbar/>
+                  <Navbar/>
                   <Switch>
                       <Route exact path="/" component={Landing} />
                       <Route exact path="/signup" component={SignUp}/>
                       <Route exact path="/login" component={Login}/>
-                      <Route exact path="/workspace" component={Workspace}/>
+                      <PrivateRoute exact path="/workspace" component={Workspace}/>
                   </Switch>
-                <Footer/>
+                  <Footer/>
               </div>
             </Router>
       </Provider>
