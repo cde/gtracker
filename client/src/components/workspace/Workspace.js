@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentProfile} from "../../actions/profileUserActions";
 
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import Spinner from '../misc/Spinner';
+
+import { Row, Col } from 'reactstrap';
+import ProfileUserActions from "./ProfileUserActions";
 
 class Workspace extends Component {
 
@@ -22,7 +25,16 @@ class Workspace extends Component {
             workspaceContent = <Spinner/>
         }else{
             if(Object.keys(profile).length > 0 ) {
-                workspaceContent = (<h1> Profile info </h1>)
+                workspaceContent = (
+                    <div>
+                        <p className="lead text-muted">
+                            Welcome <Link to={`/profile/${profile.username}`}>{profile.fullName}</Link>
+                        </p>
+                        <ProfileUserActions/>
+
+                    </div>
+
+                    )
             }else {
                 workspaceContent = (
                     <div>
@@ -36,12 +48,12 @@ class Workspace extends Component {
         return(
             <div>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
+                    <Row>
+                        <Col md={12}>
                             <h1 className="display-4">Workspace</h1>
                             {workspaceContent}
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                 </div>
             </div>
         )

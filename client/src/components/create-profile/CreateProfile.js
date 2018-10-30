@@ -101,10 +101,11 @@ class CreateProfile extends Component {
                             <p>{user.username}</p>
 
                             <div className="mb-3">
-                                <Button onClick={this.onClickSocialFields}>
+                                <Button className='btn-light' onClick={this.onClickSocialFields}>
+                                    <i className="fas fab fa-twitter text-info mr-1" />
                                     Add Social Links
                                 </Button>
-                                <span className="text-muted">Optional</span>
+                                <span className="text-muted"> .. Optional</span>
                             </div>
                             {socialFields}
 
