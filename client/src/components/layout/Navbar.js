@@ -21,7 +21,7 @@ class Navbar extends Component {
                 <li className="nav-item">
                     <a href="" onClick={this.logoutClick} className="nav-link">
                         <img
-                            className="rounded-circle"
+                            className="rounded"
                             src={user.avatar}
                             alt={user.username}
                             style={{ width: '25px', marginRight: '5px' }}

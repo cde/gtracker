@@ -3,8 +3,6 @@ const isEmpty = require('./isEmpty');
 
 module.exports = function validateCreateInput(data){
     let errors = {};
-    console.log(data)
-
     data.username = !isEmpty(data.username) ? data.username : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.password = !isEmpty(data.password) ? data.password : '';

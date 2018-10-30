@@ -6,12 +6,11 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    firstName: { type: String,  required: true },
-    lastName: { type: String,  required: true },
+    fullName: { type: String,  required: true },
     username: {
         type: String,
         require: true,
-        max: 40
+        max: 60
     },
     company: { type: String },
     website: { type: String },

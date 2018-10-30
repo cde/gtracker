@@ -27,7 +27,7 @@ router.get(
         const errors = {};
         console.log(req.user.id );
         Profile.findOne({ user: req.user.id })
-            .populate('user', ['name', 'avatar'])
+            .populate('user', ['username', 'avatar'])
             .then(profile => {
                 if (!profile) {
                     errors.noProfile = 'There is no profile for this user';
@@ -46,7 +46,7 @@ router.get(
 router.get('/username/:username', (req, res) => {
     console.log(req.params);
     Profile.findOne({ username: req.params.username })
-        .populate('user', ['name', 'avatar'])
+        .populate('user', ['username', 'avatar'])
         .then(profile => {
             if(!profile) {
                 errors.noProfile = "There is no profile for this username";
@@ -66,7 +66,7 @@ router.get('/username/:username', (req, res) => {
 router.get('/user/:user_id', (req, res) => {
     const errors = {};
     Profile.findOne({ user: req.params.user_id })
-        .populate('user', ['name', 'avatar'])
+        .populate('user', ['username', 'avatar'])
         .then(profile => {
             if(!profile) {
                 errors.noProfile = "There are no profiles";
@@ -85,7 +85,7 @@ router.get('/user/:user_id', (req, res) => {
 
 router.get('/all', (req, res) => {
         Profile.find({})
-            .populate('user', ['name', 'avatar'])
+            .populate('user', ['username', 'avatar'])
             .then(profile => {
                 if(!profile) {
                     errors.noProfile = "There is no profile for this username";
@@ -105,6 +105,7 @@ router.get('/all', (req, res) => {
 
 router.post('/', passport.authenticate('jwt', { session: false}),
     (req, res) => {
+        console.log('create-profile', req.body);
         const { errors, isValid } = validateProfileInput(req.body);
 
         // Check Validation
@@ -115,9 +116,8 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         // Get fields
         const profileFields = {};
         profileFields.user = req.user.id;
-        profileFields.username = user.username;
-        if (req.body.first_name) profileFields.firstName = req.body.first_name;
-        if (req.body.last_name) profileFields.lastName = req.body.last_name;
+        profileFields.username = req.user.username;
+        if (req.body.full_name) profileFields.fullName = req.body.full_name;
         if (req.body.company) profileFields.company = req.body.company;
         if (req.body.website) profileFields.website = req.body.website;
         if (req.body.location) profileFields.location = req.body.location;
@@ -158,6 +158,39 @@ router.post('/', passport.authenticate('jwt', { session: false}),
     }
 );
 
+
+router.post('/social', passport.authenticate('jwt', { session: false}),
+    (req, res) => {
+        const profileFields = {};
+        profileFields.user = req.user.id;
+        profileFields.username = req.user.username;
+
+        // Social
+        profileFields.social = {};
+        if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+        if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
+        if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
+        if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
+        if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+
+        console.log('profileFields ', profileFields);
+        Profile.findOne({ user: req.user.id }).then(profile => {
+            if(profile) {
+                Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})
+                    .then(profile => res.json(profile))
+            } else {
+                Profile.findOne({ username: profileFields.username }).then(profile => {
+                    if(profile) {
+                        errors.username = 'Username already exists';
+                        res.status(400).json(errors);
+                    }
+                    new Profile(profileFields).save().then(profile => res.json(profile));
+                })
+            }
+        })
+
+    }
+);
 
 // @route   DELETE api/profile
 // @desc    Delete user and profile

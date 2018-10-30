@@ -12,6 +12,8 @@ import SelectListGroup from "../form/SelectListGroup";
 import professionalStatus from "./professionalStatus";
 import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
 
+import { createProfile} from "../../actions/profileUserActions";
+
 class CreateProfile extends Component {
     state = {
         displaySocialFields: false,
@@ -31,6 +33,11 @@ class CreateProfile extends Component {
         errors: {}
     };
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.errors){
+            this.setState({ errors: nextProps.errors })
+        }
+    }
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -43,10 +50,14 @@ class CreateProfile extends Component {
         event.preventDefault();
         const profile = {
             username: this.state.username,
+            full_name: this.state.full_name,
+            status: this.state.status,
+            company: this.state.company,
+            website: this.state.website,
+            skills: this.state.skills
         };
         console.log(profile);
-        // along with withRouter(Signup), this.props.history is used to redirect from within this action
-        // this.props.createProfile(profile, this.props.history);
+        this.props.createProfile(profile, this.props.history);
 
     };
 
@@ -66,11 +77,10 @@ class CreateProfile extends Component {
         if(displaySocialFields){
             socialFields =  (<SocialFields
                 errors = {errors}
-                twitter = {this.state.twitter}
+                // twitter = {this.state.twitter}
             />)
 
         }
-
         return (
             <div>
                 <div className="container">
@@ -85,7 +95,7 @@ class CreateProfile extends Component {
                                 className="rounded"
                                 src={user.avatar}
                                 alt={user.username}
-                                style={{ width: '100px', marginRight: '5px' }}
+                                style={{ width: '200px', marginRight: '5px' }}
                                 title= "Connect gravatar to your email to display an image"
                             />
                             <p>{user.username}</p>
@@ -102,12 +112,13 @@ class CreateProfile extends Component {
                         <Col md={7}>
                             <form onSubmit={this.onSubmit}>
                                 <FormGroupField
-                                    placeholder="Profile Username"
-                                    name="username"
-                                    value={this.state.username}
+                                    label="Full Name"
+                                    placeholder="Full Name"
+                                    name="full_name"
+                                    value={this.state.full_name}
                                     onChange={this.handleInputChange}
-                                    error={errors.username}
-                                    info="A unique handle for your profile URL"
+                                    error={errors.full_name}
+                                    info="Please provide your full name (First and Last Name)"
                                 />
                                 <SelectListGroup
                                     placeholder="Status"
@@ -159,7 +170,6 @@ class CreateProfile extends Component {
                                     info="Tell us more about yourself"
                                 />
                                 <Button>Submit</Button>
-
                             </form>
                         </Col>
                     </Row>
@@ -169,7 +179,6 @@ class CreateProfile extends Component {
     }
 }
 
-//
 CreateProfile.propTypes = {
     auth: PropTypes.object,
     profile: PropTypes.object.isRequired,
@@ -182,4 +191,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, {createProfile})(CreateProfile);
