@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+// import { withRouter } from 'react-router-dom';
+import SocialFields from './SocialFields';
 
 
+import { Row, Col, Button } from 'reactstrap';
+import FormGroupField from './../form/FormGroupField';
+import SelectListGroup from "../form/SelectListGroup";
+
+import professionalStatus from "./professionalStatus";
+import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
 
 class CreateProfile extends Component {
     state = {
-        displaySocialInputs: false,
+        displaySocialFields: false,
         username: '',
         company: '',
         website: '',
@@ -22,15 +30,139 @@ class CreateProfile extends Component {
         instagram: '',
         errors: {}
     };
+
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
+    };
+
+    onSubmit = event => {
+        event.preventDefault();
+        const profile = {
+            username: this.state.username,
+        };
+        console.log(profile);
+        // along with withRouter(Signup), this.props.history is used to redirect from within this action
+        // this.props.createProfile(profile, this.props.history);
+
+    };
+
+    onClickSocialFields = event => {
+        console.log('before ', this.state.displaySocialFields);
+        this.setState(prevState => ({
+            displaySocialFields: !prevState.displaySocialFields
+        }));
+        console.log('before ', this.state.displaySocialFields);
+    }
+
     render() {
+        const { errors, displaySocialFields } = this.state;
+        const { user } = this.props.auth;
+
+        let socialFields;
+        if(displaySocialFields){
+            socialFields =  (<SocialFields
+                errors = {errors}
+                twitter = {this.state.twitter}
+            />)
+
+        }
+
         return (
             <div>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="display-4">Complete your Profile</h1>
-                        </div>
-                    </div>
+                    <Row>
+                        <Col md={12}>
+                            <h1 className="display-6 text-md-center">Complete your Profile</h1>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <img
+                                className="rounded"
+                                src={user.avatar}
+                                alt={user.username}
+                                style={{ width: '100px', marginRight: '5px' }}
+                                title= "Connect gravatar to your email to display an image"
+                            />
+                            <p>{user.username}</p>
+
+                            <div className="mb-3">
+                                <Button onClick={this.onClickSocialFields}>
+                                    Add Social Links
+                                </Button>
+                                <span className="text-muted">Optional</span>
+                            </div>
+                            {socialFields}
+
+                        </Col>
+                        <Col md={7}>
+                            <form onSubmit={this.onSubmit}>
+                                <FormGroupField
+                                    placeholder="Profile Username"
+                                    name="username"
+                                    value={this.state.username}
+                                    onChange={this.handleInputChange}
+                                    error={errors.username}
+                                    info="A unique handle for your profile URL"
+                                />
+                                <SelectListGroup
+                                    placeholder="Status"
+                                    name="status"
+                                    value={this.state.status}
+                                    onChange={this.handleInputChange}
+                                    options={professionalStatus}
+                                    error={errors.status}
+                                    info="Give us an idea of where you are at in your career"
+                                />
+                                <FormGroupField
+                                    placeholder="Company"
+                                    name="company"
+                                    value={this.state.company}
+                                    onChange={this.handleInputChange}
+                                    error={errors.company}
+                                    info="Could be the one you work for or your own company"
+                                />
+                                <FormGroupField
+                                    placeholder="Website"
+                                    name="website"
+                                    type="text"
+                                    value={this.state.website}
+                                    onChange={this.handleInputChange}
+                                    error={errors.website}
+                                    info="Could be your own website"
+                                />
+                                <FormGroupField
+                                    placeholder="Github Username"
+                                    name="githubusername"
+                                    value={this.state.githubusername}
+                                    onChange={this.handleInputChange}
+                                    error={errors.githubusername}
+                                    info="Github link, including your username"
+                                />
+                                <FormGroupField
+                                    placeholder="* Skills"
+                                    name="skills"
+                                    value={this.state.skills}
+                                    onChange={this.handleInputChange}
+                                    error={errors.skills}
+                                    info="Please use comma separated values (eg. HTML,CSS,JavaScript,Ruby)"
+                                />
+                                <FormGroupTextAreaField
+                                    name="bio"
+                                    value={this.state.bio}
+                                    onChange={this.handleInputChange}
+                                    error={errors.bio}
+                                    info="Tell us more about yourself"
+                                />
+                                <Button>Submit</Button>
+
+                            </form>
+                        </Col>
+                    </Row>
                 </div>
             </div>
         )
@@ -38,12 +170,14 @@ class CreateProfile extends Component {
 }
 
 //
-// CreateProfile.propTypes = {
-//     profile: PropTypes.object.isRequired,
-//     errors: PropTypes.object.isRequired
-// };
+CreateProfile.propTypes = {
+    auth: PropTypes.object,
+    profile: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
+    auth: state.auth,
     profile: state.profile,
     errors: state.errors
 });

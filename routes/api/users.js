@@ -37,7 +37,7 @@ router.post('/create', (req, res) => {
                 errors.email = 'Email already exists';
             }
             if(user.username === usernameRequest) {
-                errors.username = 'Username already exists';
+                errors.username = 'Oh noes! that username is already taken';
             }
             return res.status(400).json(errors);
         } else {
