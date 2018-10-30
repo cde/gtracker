@@ -8,3 +8,22 @@ export default combineReducers({
     errors: errorReducer,
     profile: profileUserReducer
 });
+
+
+// const appReducer = combineReducers({
+//     auth: authReducer,
+//     errors: errorReducer,
+//     profile: profileUserReducer
+// })
+//
+// const initialState = appReducer({}, {})
+//
+// const rootReducer = (state, action) => {
+//     if (action.type === 'LOG_OUT') {
+//         state = initialState
+//     }
+//
+//     return appReducer(state, action)
+// }
+//
+// export default rootReducer

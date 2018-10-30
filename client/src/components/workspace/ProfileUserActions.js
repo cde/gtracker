@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ButtonGroup, Button } from 'reactstrap';
+import { ButtonGroup } from 'reactstrap';
 
 const ProfileUserActions = () => {
     return (

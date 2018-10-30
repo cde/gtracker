@@ -10,7 +10,10 @@ import {GET_ERRORS, SET_CURRENT_USER} from "./types";
 // we will use thunk middleware here (dispatch)
 export const createUser = (userData, history) => dispatch => {
     axios.post('/api/users/create', userData)
-        .then(res => history.push('/login'))
+        .then(res => {
+            console.log('authActions - createUser', res.data);
+            history.push('/login')
+        })
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -22,6 +25,7 @@ export const createUser = (userData, history) => dispatch => {
 export const loginUser = (userData) => dispatch => {
     axios.post('/api/users/login', userData)
         .then(res => {
+            console.log('authActions - loginUser', res.data);
             // save to localStore
             const { token } = res.data;
             localStorage.setItem('jwtToken',token);

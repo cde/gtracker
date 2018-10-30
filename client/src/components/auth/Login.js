@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import { loginUser } from '../../actions/authActions';
-import { withRouter } from 'react-router-dom';
 
 import FormGroupField from './../form/FormGroupField';
+import { Container, Row, Col } from 'reactstrap';
 
 class Login extends Component {
     state = {
@@ -36,7 +38,6 @@ class Login extends Component {
     };
 
     onSubmit = event => {
-        console.log(event);
         event.preventDefault();
         const user = {
             email: this.state.email,
@@ -49,10 +50,21 @@ class Login extends Component {
         const { errors } = this.state;
         return (
             <div className="login">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Log In</h1>
+                <Container fluid={true}>
+                    <Row>
+                        <Col md={6} className="landing-login">
+                            <div className="dark-overlay landing-inner text-light">
+                                <div></div>
+                            </div>
+
+                        </Col>
+                        <Col md={3} className='m-auto'>
+                            <div>
+                                <h2 className="text-center">Welcome back</h2>
+                                <p>New to Enlace?
+                                    <Link to='/signup'> Sign Up</Link>
+                                </p>
+                            </div>
                             <form onSubmit={this.onSubmit}>
                                 <FormGroupField
                                     placeholder="Email"
@@ -71,11 +83,11 @@ class Login extends Component {
                                     onChange={this.handleInputChange}
                                     error={errors.password}
                                 />
-                                <input type="submit" className="btn btn-info btn-block mt-4"/>
+                                <input type="submit" className="btn btn-lg btn-info-orange btn-block mt-4"/>
                             </form>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

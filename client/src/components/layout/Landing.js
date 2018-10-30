@@ -27,7 +27,6 @@ class Landing extends Component {
                                         events.
                                         <br/>
                                         Get a personalized feed of the latest news for your tech stack
-
                                     </p>
                                 </div>
                                 <hr/>

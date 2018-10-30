@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { createUser } from '../../actions/authActions';
 
 import FormGroupField from './../form/FormGroupField';
+import { Container, Row, Col, Button } from 'reactstrap';
 
 class Signup extends Component {
     state = {
@@ -17,6 +18,7 @@ class Signup extends Component {
     };
 
     componentDidMount(){
+        console.log("this.props.auth.isAuthenticated", this.props.auth.isAuthenticated)
         if(this.props.auth.isAuthenticated){
             this.props.history.push('/workspace')
         }
@@ -53,23 +55,23 @@ class Signup extends Component {
         const { errors } = this.state;
         return (
             <div className="signup">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Sign Up</h1>
+                <Container>
+                    <Row>
+                        <Col md={6} className=" m-auto">
+                            <h1 className="dark-medium-orange text-center">Let’s start with the basics</h1>
                             <p className="lead text-center">
                                 Create an Enlace account
                             </p>
                             <form onSubmit={this.onSubmit}>
                                 <FormGroupField
-                                    placeholder="username"
+                                    placeholder="Username *"
                                     name="username"
                                     value={this.state.username}
                                     onChange={this.handleInputChange}
                                     error={errors.username}
                                 />
                                 <FormGroupField
-                                    placeholder="Email"
+                                    placeholder="Email *"
                                     name="email"
                                     type="email"
                                     value={this.state.email}
@@ -93,11 +95,11 @@ class Signup extends Component {
                                     onChange={this.handleInputChange}
                                     error={errors.password_confirmation}
                                 />
-                                <input type="submit" className="btn btn-info btn-block mt-4" />
+                                <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
                             </form>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         )
     }

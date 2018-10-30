@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import SocialFields from './SocialFields';
 
 
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, Input } from 'reactstrap';
 import FormGroupField from './../form/FormGroupField';
 import SelectListGroup from "../form/SelectListGroup";
 
@@ -61,12 +61,10 @@ class CreateProfile extends Component {
 
     };
 
-    onClickSocialFields = event => {
-        console.log('before ', this.state.displaySocialFields);
+    onClickSocialFields =(event)=> {
         this.setState(prevState => ({
             displaySocialFields: !prevState.displaySocialFields
         }));
-        console.log('before ', this.state.displaySocialFields);
     }
 
     render() {
@@ -114,14 +112,16 @@ class CreateProfile extends Component {
                             <form onSubmit={this.onSubmit}>
                                 <FormGroupField
                                     label="Full Name"
-                                    placeholder="Full Name"
+                                    placeholder="Name *"
                                     name="full_name"
                                     value={this.state.full_name}
                                     onChange={this.handleInputChange}
                                     error={errors.full_name}
                                     info="Please provide your full name (First and Last Name)"
                                 />
+
                                 <SelectListGroup
+                                    type="text"
                                     placeholder="Status"
                                     name="status"
                                     value={this.state.status}
@@ -131,6 +131,7 @@ class CreateProfile extends Component {
                                     info="Give us an idea of where you are at in your career"
                                 />
                                 <FormGroupField
+                                    type="text"
                                     placeholder="Company"
                                     name="company"
                                     value={this.state.company}
@@ -148,6 +149,7 @@ class CreateProfile extends Component {
                                     info="Could be your own website"
                                 />
                                 <FormGroupField
+                                    type="text"
                                     placeholder="Github Username"
                                     name="githubusername"
                                     value={this.state.githubusername}
@@ -156,6 +158,7 @@ class CreateProfile extends Component {
                                     info="Github link, including your username"
                                 />
                                 <FormGroupField
+                                    type="text"
                                     placeholder="* Skills"
                                     name="skills"
                                     value={this.state.skills}
@@ -170,7 +173,12 @@ class CreateProfile extends Component {
                                     error={errors.bio}
                                     info="Tell us more about yourself"
                                 />
-                                <Button>Submit</Button>
+                                <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
+                                {/*<Input*/}
+                                    {/*type="submit"*/}
+                                    {/*value="Submit"*/}
+                                    {/*className="btn btn-info btn-block mt-4"*/}
+                                {/*/>*/}
                             </form>
                         </Col>
                     </Row>

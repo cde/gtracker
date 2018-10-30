@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentProfile} from "../../actions/profileUserActions";
+import { getCurrentProfile, deleteAccount} from "../../actions/profileUserActions";
 
 import PropTypes from 'prop-types';
 
 import Spinner from '../misc/Spinner';
 
-import { Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import ProfileUserActions from "./ProfileUserActions";
 
 class Workspace extends Component {
 
     componentDidMount(){
         this.props.getCurrentProfile()
-
     }
+
+    onDeleteClick = (event) => {
+        this.props.deleteAccount();
+    }
+
     render() {
         const { user } = this.props.auth;
         const { loading, profile } = this.props.profile;
@@ -27,11 +31,15 @@ class Workspace extends Component {
             if(Object.keys(profile).length > 0 ) {
                 workspaceContent = (
                     <div>
-                        <p className="lead text-muted">
-                            Welcome <Link to={`/profile/${profile.username}`}>{profile.fullName}</Link>
+                        <p className="lead text-muted"> Welcome
+                            <Link to={`/profile/${profile.username}`}> {profile.fullName}</Link>
                         </p>
                         <ProfileUserActions/>
-
+                        <div>
+                            <Button
+                                className='btn-danger'
+                                onClick={this.onDeleteClick}>Delete My Account </Button>
+                        </div>
                     </div>
 
                     )
@@ -40,6 +48,7 @@ class Workspace extends Component {
                     <div>
                         <p className="lead text-muted">Welcome {user.username}</p>
                         <p> You haven't setup a profile yet. We would love to know you better. Please add some info.</p>
+
                         <Link to="/create-profile" className="btn btn-lg btn-info ">Create Profile</Link>
                     </div>
                 )
@@ -47,14 +56,16 @@ class Workspace extends Component {
         }
         return(
             <div>
-                <div className="container">
+                <Container>
                     <Row>
                         <Col md={12}>
-                            <h1 className="display-4">Workspace</h1>
+                            <h3 className="display-4">
+                                <i className="fas fa-warehouse "></i>
+                            </h3>
                             {workspaceContent}
                         </Col>
                     </Row>
-                </div>
+                </Container>
             </div>
         )
     }
@@ -62,6 +73,9 @@ class Workspace extends Component {
 
 Workspace.propTypes = {
     auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired,
+    deleteAccount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -69,4 +83,4 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, {getCurrentProfile})(Workspace);
+export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Workspace);

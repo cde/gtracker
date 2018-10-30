@@ -15,7 +15,6 @@ const validateExperienceInput = require('../../utils/experience');
 // *** PROFILE ***
 
 // *** GET requests ****
-
 // @route GET api/profile
 // @desc Get current user profile
 // @access Private
@@ -105,7 +104,7 @@ router.get('/all', (req, res) => {
 
 router.post('/', passport.authenticate('jwt', { session: false}),
     (req, res) => {
-        console.log('create-profile', req.body);
+        console.log('1) create-profile => ', req.body);
         const { errors, isValid } = validateProfileInput(req.body);
 
         // Check Validation
@@ -139,7 +138,7 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
         if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
-        console.log('profileFields ', profileFields);
+        console.log('2) profileFields => ', profileFields);
         Profile.findOne({ user: req.user.id }).then(profile => {
             if(profile) {
                 Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})

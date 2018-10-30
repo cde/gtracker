@@ -33,4 +33,9 @@ const FormGroupField = ({
     )
 };
 
+FormGroupField.defaultProps = {
+    type: 'text'
+};
+
+
 export default FormGroupField;
