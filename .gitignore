@@ -1,5 +1,8 @@
 node_modules/
 .DS_Store
 .idea/
-package-lock.json
 .mongodb-notes
+
+/config/keysdev.js
+
+yarn.lock
