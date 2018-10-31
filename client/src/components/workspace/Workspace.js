@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentProfile, deleteAccount} from "../../actions/profileUserActions";
+import { getCurrentProfile} from "../../actions/profileUserActions";
 
 import PropTypes from 'prop-types';
 
 import Spinner from '../misc/Spinner';
 
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, ButtonGroup, Button } from 'reactstrap';
 import ProfileUserActions from "./ProfileUserActions";
 
 class Workspace extends Component {
@@ -35,11 +35,11 @@ class Workspace extends Component {
                             <Link to={`/profile/${profile.username}`}> {profile.fullName}</Link>
                         </p>
                         <ProfileUserActions/>
-                        <div>
-                            <Button
-                                className='btn-danger'
-                                onClick={this.onDeleteClick}>Delete My Account </Button>
-                        </div>
+                        <ButtonGroup className="mb-4" role="group" style={{ float: 'right', paddingLeft: '10px' }}>
+                            <Button onClick={this.onDeleteClick}className="btn btn-danger">
+                                <i className="fas fa-user-times"></i> Delete My Account
+                            </Button>
+                        </ButtonGroup>
                     </div>
 
                     )
@@ -49,7 +49,7 @@ class Workspace extends Component {
                         <p className="lead text-muted">Welcome {user.username}</p>
                         <p> You haven't setup a profile yet. We would love to know you better. Please add some info.</p>
 
-                        <Link to="/create-profile" className="btn btn-lg btn-info ">Create Profile</Link>
+                        <Link to="/create-profile" className="btn btn-lg btn-info-orange">Create Profile</Link>
                     </div>
                 )
             }
@@ -83,4 +83,4 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Workspace);
+export default connect(mapStateToProps, {getCurrentProfile})(Workspace);

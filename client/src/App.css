@@ -37,18 +37,6 @@ img {
 }
 
 
-.dark-medium-orange {
-    color: #ff4d00;
-}
-.medium-orange {
-  color: #ff7400;
-}
-
-.btn-info-orange {
-    color: #fff;
-    background-color: #ff7400;
-    border-color: #ff7400;
-}
 
 /* Log in*/
 .landing-login {
@@ -64,7 +52,7 @@ img {
 
 .landing-login div {
     /*font-family: "Comic Sans MS";*/
-    ont-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans;
     font-size-adjust: revert;
     font-weight: 400;
     font-size: 25px;
@@ -72,4 +60,30 @@ img {
 
 landing-login .enlace {
     opacity: 0.65;
+}
+
+
+/*Orange Fade Color Palette*/
+/*https://www.color-hex.com/color-palette/17888*/
+.text-info {
+    color: #ffa162;
+}
+
+.bg-orange {
+    /*background-color: #fd8f45;*/
+    background-color: #ff8532;
+}
+
+
+.dark-medium-orange {
+    color: #ff4d00;
+}
+.medium-orange {
+    color: #ff7400;
+}
+
+.btn-info-orange {
+    color: #fff;
+    background-color: #ff7400;
+    border-color: #ff7400;
 }

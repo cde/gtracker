@@ -5,12 +5,14 @@ import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CUR
 // Get Current Profile
 export const getCurrentProfile = () => dispatch => {
     dispatch(isProfileLoading());
-    axios.get('api/profile').then(res => dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-    })).catch(err => dispatch({
-        type: GET_PROFILE, // it tells us that user don't have a profile
-        payload: {}
+    axios.get('api/profile')
+        .then(res => dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+            }))
+        .catch(err => dispatch({
+            type: GET_PROFILE, // it tells us that user don't have a profile
+            payload: {}
     }))
 };
 

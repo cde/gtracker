@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import SocialFields from '../common/SocialFields';
+// import SocialFields from './SocialFields';
 
-import { createProfile} from "../../actions/profileUserActions";
+import { createProfile, getCurrentProfile } from "../../actions/profileUserActions";
 
 
 import { Row, Col, Button } from 'reactstrap';
@@ -14,14 +14,14 @@ import professionalStatus from "../common/professionalStatus";
 import SelectListGroup from "../form/SelectListGroup";
 import FormGroupField from './../form/FormGroupField';
 import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
+import isEmpty from "../../utils/isEmpty";
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
     state = {
         displaySocialFields: false,
         full_name: '',
         company: '',
         website: '',
-        location: '',
         status: '',
         skills: '',
         githubusername: '',
@@ -34,9 +34,65 @@ class CreateProfile extends Component {
         errors: {}
     };
 
+    componentDidMount(){
+        this.props.getCurrentProfile();
+
+
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.errors){
-            this.setState({ errors: nextProps.errors })
+            this.setState({ errors: nextProps.errors });
+            console.log(this.state.errors);
+        }
+        if (nextProps.profile.profile) {
+            const profile = nextProps.profile.profile;
+
+            profile.fullName = !isEmpty(profile.fullName) ? profile.fullName : '';
+            profile.status = !isEmpty(profile.status) ? profile.status : '';
+
+            profile.company = !isEmpty(profile.company) ? profile.company : '';
+            profile.website = !isEmpty(profile.website) ? profile.website : '';
+            profile.githubusername = !isEmpty(profile.githubusername)
+                ? profile.githubusername
+                : '';
+            profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
+            profile.social = !isEmpty(profile.social) ? profile.social : {};
+            profile.twitter = !isEmpty(profile.social.twitter)
+                ? profile.social.twitter
+                : '';
+            profile.facebook = !isEmpty(profile.social.facebook)
+                ? profile.social.facebook
+                : '';
+            profile.linkedin = !isEmpty(profile.social.linkedin)
+                ? profile.social.linkedin
+                : '';
+            profile.youtube = !isEmpty(profile.social.youtube)
+                ? profile.social.youtube
+                : '';
+            profile.instagram = !isEmpty(profile.social.instagram)
+                ? profile.social.instagram
+                : '';
+
+            const skillsCSV = profile.skills.join(',');
+
+
+            // Set component fields state
+            this.setState({
+                full_name: profile.fullName,
+                company: profile.company,
+                website: profile.website,
+                location: profile.location,
+                status: profile.status,
+                skills: skillsCSV,
+                githubusername: profile.githubusername,
+                bio: profile.bio,
+                twitter: profile.twitter,
+                facebook: profile.facebook,
+                linkedin: profile.linkedin,
+                youtube: profile.youtube,
+                instagram: profile.instagram
+            });
         }
     }
 
@@ -68,22 +124,23 @@ class CreateProfile extends Component {
     }
 
     render() {
-        const { errors, displaySocialFields } = this.state;
+        const { errors } = this.state;
         const { user } = this.props.auth;
-        let socialFields;
-        if(displaySocialFields){
-            socialFields =  (<SocialFields
-                errors = {errors}
-                // twitter = {this.state.twitter}
-            />)
-
-        }
+        // console.log(user);
+        // let socialFields;
+        // if(displaySocialFields){
+        //     socialFields =  (<SocialFields
+        //         errors = {errors}
+        //         // twitter = {this.state.twitter}
+        //     />)
+        //
+        // }
         return (
             <div>
                 <div className="container">
                     <Row>
                         <Col md={12}>
-                            <h1 className="display-6 text-md-center">Complete your Profile</h1>
+                            <h1 className="display-6 text-md-center">Edit Profile</h1>
                         </Col>
                     </Row>
                     <Row>
@@ -104,7 +161,7 @@ class CreateProfile extends Component {
                                 </Button>
                                 <span className="text-muted"> .. Optional</span>
                             </div>
-                            {socialFields}
+                            {/*{socialFields}*/}
 
                         </Col>
                         <Col md={6}>
@@ -182,7 +239,9 @@ class CreateProfile extends Component {
     }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
+    getCurrentProfile: PropTypes.func.isRequired,
+    createProfile: PropTypes.func.isRequired,
     auth: PropTypes.object,
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
@@ -194,4 +253,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile));
+export default connect(mapStateToProps, { getCurrentProfile, createProfile })(withRouter(EditProfile));

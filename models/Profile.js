@@ -47,6 +47,24 @@ const ProfileSchema = new Schema({
             to: { type: Date },
             current: { type: Boolean, default: false }
         } ],
+
+    social: {
+        youtube: {
+            type: String
+        },
+        twitter: {
+            type: String
+        },
+        facebook: {
+            type: String
+        },
+        linkedin: {
+            type: String
+        },
+        instagram: {
+            type: String
+        }
+    },
     createAt: { type: Date, default: Date.now() }
 
 });

@@ -61,7 +61,7 @@ class Login extends Component {
                         <Col md={3} className='m-auto'>
                             <div>
                                 <h2 className="text-center">Welcome back</h2>
-                                <p>New to Enlace?
+                                <p className="text-center">New to Enlace?
                                     <Link to='/signup'> Sign Up</Link>
                                 </p>
                             </div>

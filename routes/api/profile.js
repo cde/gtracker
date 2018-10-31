@@ -24,7 +24,7 @@ router.get(
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const errors = {};
-        console.log(req.user.id );
+        console.log('get/profile',req.user.id);
         Profile.findOne({ user: req.user.id })
             .populate('user', ['username', 'avatar'])
             .then(profile => {
