@@ -45,8 +45,6 @@ class Signup extends Component {
             password: this.state.password,
             password_confirmation: this.state.password_confirmation
         };
-        // console.log(newUser);
-        // along with withRouter(Signup), this.props.history is used to redirect from within this action
         this.props.createUser(newUser, this.props.history);
 
     };
@@ -54,53 +52,58 @@ class Signup extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="signup">
-                <Container>
-                    <Row>
-                        <Col md={6} className=" m-auto">
-                            <h1 className="dark-medium-orange text-center">Let’s start with the basics</h1>
-                            <p className="lead text-center">
-                                Create an Enlace account
-                            </p>
-                            <form onSubmit={this.onSubmit}>
-                                <FormGroupField
-                                    placeholder="Username *"
-                                    name="username"
-                                    value={this.state.username}
-                                    onChange={this.handleInputChange}
-                                    error={errors.username}
-                                />
-                                <FormGroupField
-                                    placeholder="Email *"
-                                    name="email"
-                                    type="email"
-                                    value={this.state.email}
-                                    onChange={this.handleInputChange}
-                                    error={errors.email}
-                                    info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                                />
-                                <FormGroupField
-                                    placeholder="Password"
-                                    name="password"
-                                    type="password"
-                                    value={this.state.password}
-                                    onChange={this.handleInputChange}
-                                    error={errors.password}
-                                />
-                                <FormGroupField
-                                    placeholder="Confirm Password"
-                                    name="password_confirmation"
-                                    type="password"
-                                    value={this.state.password_confirmation}
-                                    onChange={this.handleInputChange}
-                                    error={errors.password_confirmation}
-                                />
-                                <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
-                            </form>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <Container className="signup">
+                <Row>
+                    <Col md={6} className="signup-logos">
+                        <div className="landing-inner text-light">
+                            <div></div>
+                        </div>
+
+                    </Col>
+                    <Col md={6} className=" m-auto">
+                        <h1 className="dark-medium-orange text-center">Let’s start with the basics</h1>
+                        <p className="lead text-center">
+                            Create an Enlace account
+                        </p>
+                        <form onSubmit={this.onSubmit}>
+                            <FormGroupField
+                                placeholder="Username *"
+                                name="username"
+                                value={this.state.username}
+                                onChange={this.handleInputChange}
+                                error={errors.username}
+                            />
+                            <FormGroupField
+                                placeholder="Email *"
+                                name="email"
+                                type="email"
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
+                                error={errors.email}
+                                info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                            />
+                            <FormGroupField
+                                placeholder="Password"
+                                name="password"
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.handleInputChange}
+                                error={errors.password}
+                            />
+                            <FormGroupField
+                                placeholder="Confirm Password"
+                                name="password_confirmation"
+                                type="password"
+                                value={this.state.password_confirmation}
+                                onChange={this.handleInputChange}
+                                error={errors.password_confirmation}
+                            />
+                            <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
+                        </form>
+                    </Col>
+                </Row>
+                <SocialSignup />
+        </Container>
         )
     }
 

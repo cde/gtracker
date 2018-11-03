@@ -66,7 +66,20 @@ landing-login .enlace {
 /*Orange Fade Color Palette*/
 /*https://www.color-hex.com/color-palette/17888*/
 .text-info {
-    color: #ffa162;
+    color: #ffa162!important;
+}
+
+.text-info-light-blue {
+    color: #1da1f2;
+}
+
+.text-info-medium-blue {
+    color: #0077B5;
+}
+
+.text-info-dark-blue {
+    /*color: #205081;*/
+    color: #4267b2;
 }
 
 .bg-orange {
@@ -74,10 +87,10 @@ landing-login .enlace {
     background-color: #ff8532;
 }
 
-
 .dark-medium-orange {
     color: #ff4d00;
 }
+
 .medium-orange {
     color: #ff7400;
 }
@@ -86,4 +99,96 @@ landing-login .enlace {
     color: #fff;
     background-color: #ff7400;
     border-color: #ff7400;
+}
+
+.bg-dark-orange {
+    background-color: #e14329;
+}
+
+/* Other colors*/
+
+.bg-dark-blue {
+    background-color: #205081;
+}
+
+.social-signup .oauth-button {
+    width: 30px;
+    margin-top: 10px;
+    color: white;
+}
+
+.social-signup .oauth-button a{
+    height: 60px;
+    width: 295px;
+    display: inline-block;
+    color: #fff;
+    /*border-radius: 100px;*/
+    padding: 6px 12px;
+}
+.social-signup .oauth-button fa {
+    display: inline-block;
+    /*font-size: 30px;*/
+}
+
+
+.social-signup  .oauth-button .svg-inline--fa{
+    font-size: 20px;
+    width: 30px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-right: 15px;
+
+}
+
+.svg-inline--fa .fa-github .fa-w-16{
+    display: inline-block;
+}
+
+.signup-logos {
+    position: relative;
+    background: url('./img/socials-nucleo.gif') no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin-top: -24px;
+    margin-bottom: -50px;
+    opacity: 0.65%;
+}
+
+.card-columns {
+    color: #205081;
+}
+
+.card-columns .feature-3{
+    background: url('./img/socials-nucleo.gif') no-repeat;
+}
+
+footer {
+    background-color: #333;
+    border-top: 1px solid #333;
+    position: relative;
+    z-index: 4;
+}
+
+.features {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*!* Workspace */
+ a {
+    color:#ff4d00;
+}
+
+ a:hover {
+    color: 	#ffc100;
+    text-decoration: #ffa162;
+}
+
+ /*Profile*/
+.profile .form-group {
+    margin-bottom: 0px;
 }

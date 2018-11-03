@@ -49,8 +49,7 @@ class Login extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="login">
-                <Container fluid={true}>
+            <Container className="login" fluid={true}>
                     <Row>
                         <Col md={6} className="landing-login">
                             <div className="dark-overlay landing-inner text-light">
@@ -88,7 +87,6 @@ class Login extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </div>
         )
     }
 }

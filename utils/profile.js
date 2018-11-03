@@ -8,7 +8,7 @@ module.exports = function validateProfileInput(data) {
     data.status = !isEmpty(data.status) ? data.status : '';
     data.skills = !isEmpty(data.skills) ? data.skills : '';
 
-    // Profile
+    // ProfileItem
     if(Validator.isEmpty(data.full_name)) {
         errors.full_name = 'Full Name is required';
     }

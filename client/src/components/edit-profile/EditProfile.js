@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-// import SocialFields from './SocialFields';
-
-import { createProfile, getCurrentProfile } from "../../actions/profileUserActions";
-
-
-import { Row, Col, Button } from 'reactstrap';
-
+//Common components
+import SocialFields from '../common/SocialFields';
+import ProfileImage from '../common/ProfileImage';
 import professionalStatus from "../common/professionalStatus";
 import SelectListGroup from "../form/SelectListGroup";
 import FormGroupField from './../form/FormGroupField';
 import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
+import InputIconGroup from "../form/InputIconGroup";
+
+import { Container, Row, Col, Button, FormGroup } from 'reactstrap';
+
+import { createProfile, getCurrentProfile, clearErrors } from "../../actions/profileUserActions";
+
 import isEmpty from "../../utils/isEmpty";
 
 class EditProfile extends Component {
@@ -36,14 +38,14 @@ class EditProfile extends Component {
 
     componentDidMount(){
         this.props.getCurrentProfile();
-
-
+        if(this.props.errors){
+            this.props.clearErrors();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.errors){
             this.setState({ errors: nextProps.errors });
-            console.log(this.state.errors);
         }
         if (nextProps.profile.profile) {
             const profile = nextProps.profile.profile;
@@ -107,12 +109,12 @@ class EditProfile extends Component {
         event.preventDefault();
         const profile = {
             full_name: this.state.full_name,
+            skills: this.state.skills,
             status: this.state.status,
             company: this.state.company,
-            website: this.state.website,
-            skills: this.state.skills
+            location: this.state.location,
+            website: this.state.website
         };
-        console.log(profile);
         this.props.createProfile(profile, this.props.history);
 
     };
@@ -124,87 +126,95 @@ class EditProfile extends Component {
     }
 
     render() {
-        const { errors } = this.state;
+        const { errors, displaySocialFields } = this.state;
         const { user } = this.props.auth;
-        // console.log(user);
-        // let socialFields;
-        // if(displaySocialFields){
-        //     socialFields =  (<SocialFields
-        //         errors = {errors}
-        //         // twitter = {this.state.twitter}
-        //     />)
-        //
-        // }
+        let socialFields;
+        if(displaySocialFields){
+            socialFields =  (<SocialFields
+                full_name = {this.state.full_name}
+                skills = {this.state.skills}
+                status = {this.state.status}
+                twitter = {this.state.twitter}
+                facebook = {this.state.facebook}
+                linkedin = {this.state.linkedin}
+                instagram = {this.state.instagram}
+                errors = {errors}
+            />)
+
+        }
         return (
-            <div>
-                <div className="container">
-                    <Row>
-                        <Col md={12}>
-                            <h1 className="display-6 text-md-center">Edit Profile</h1>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={4}>
-                            <img
-                                className="rounded"
-                                src={user.avatar}
-                                alt={user.username}
-                                style={{ width: '200px', marginRight: '5px' }}
-                                title= "Connect gravatar to your email to display an image"
+            <Container className="profile">
+                <Row>
+                    <Col md={12}>
+                        <h1 className="display-5 text-center dark-medium-orange">Edit Profile</h1>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={4}>
+                        <ProfileImage user={user} />
+                        <div className="mb-3">
+                            <Button className='btn-light' onClick={this.onClickSocialFields}>
+                                <i className="fas fab fa-twitter text-info-light-blue mr-1" />
+                                <i className="fas fab fa-linkedin text-info-medium-blue mr-1" />
+                                <i className="fas fab fa-instagram text-danger mr-1" />
+                                <i className="fas fab fa-facebook-square text-info-dark-blue mr-1" />
+                            </Button>
+                            <small className="text-muted"> .. Optional</small>
+                        </div>
+                        {socialFields}
+
+                    </Col>
+                    <Col md={6}>
+                        <form onSubmit={this.onSubmit}>
+                            <FormGroupField
+                                label="Full Name"
+                                placeholder="Name *"
+                                name="full_name"
+                                value={this.state.full_name}
+                                onChange={this.handleInputChange}
+                                error={errors.full_name}
+                                info="Please provide your full name (First and Last Name)"
                             />
-                            <p>{user.username}</p>
+                            <FormGroupField
+                                type="text"
+                                placeholder="* Skills"
+                                name="skills"
+                                value={this.state.skills}
+                                onChange={this.handleInputChange}
+                                error={errors.skills}
+                                info="Please use comma separated values (eg. HTML,CSS,JavaScript,Ruby)"
+                            />
 
-                            <div className="mb-3">
-                                <Button className='btn-light' onClick={this.onClickSocialFields}>
-                                    <i className="fas fab fa-twitter text-info mr-1" />
-                                    Add Social Links
-                                </Button>
-                                <span className="text-muted"> .. Optional</span>
-                            </div>
-                            {/*{socialFields}*/}
-
-                        </Col>
-                        <Col md={6}>
-                            <form onSubmit={this.onSubmit}>
-                                <FormGroupField
-                                    label="Full Name"
-                                    placeholder="Name *"
-                                    name="full_name"
-                                    value={this.state.full_name}
-                                    onChange={this.handleInputChange}
-                                    error={errors.full_name}
-                                    info="Please provide your full name (First and Last Name)"
-                                />
-
-                                <SelectListGroup
-                                    type="text"
-                                    placeholder="Status"
-                                    name="status"
-                                    value={this.state.status}
-                                    onChange={this.handleInputChange}
-                                    options={professionalStatus}
-                                    error={errors.status}
-                                    info="Give us an idea of where you are at in your career"
-                                />
-                                <FormGroupField
-                                    type="text"
-                                    placeholder="Company"
-                                    name="company"
-                                    value={this.state.company}
-                                    onChange={this.handleInputChange}
-                                    error={errors.company}
-                                    info="Could be the one you work for or your own company"
-                                />
-                                <FormGroupField
-                                    placeholder="Website"
-                                    name="website"
-                                    type="text"
-                                    value={this.state.website}
-                                    onChange={this.handleInputChange}
-                                    error={errors.website}
-                                    info="Could be your own website"
-                                />
-                                <FormGroupField
+                            <SelectListGroup
+                                type="text"
+                                placeholder="Status"
+                                name="status"
+                                value={this.state.status}
+                                onChange={this.handleInputChange}
+                                options={professionalStatus}
+                                error={errors.status}
+                                info="Give us an idea of where you are at in your career"
+                            />
+                            <FormGroupField
+                                type="text"
+                                placeholder="Company"
+                                name="company"
+                                value={this.state.company}
+                                onChange={this.handleInputChange}
+                                error={errors.company}
+                                info="Could be the one you work for or your own company"
+                            />
+                            <FormGroupField
+                                placeholder="Website"
+                                name="website"
+                                type="text"
+                                value={this.state.website}
+                                onChange={this.handleInputChange}
+                                error={errors.website}
+                                info="Could be your own website"
+                            />
+                            <FormGroup className="mt-4">
+                                <InputIconGroup
                                     type="text"
                                     placeholder="Github Username"
                                     name="githubusername"
@@ -212,29 +222,22 @@ class EditProfile extends Component {
                                     onChange={this.handleInputChange}
                                     error={errors.githubusername}
                                     info="Github link, including your username"
+                                    icon="fab fa-github"
                                 />
-                                <FormGroupField
-                                    type="text"
-                                    placeholder="* Skills"
-                                    name="skills"
-                                    value={this.state.skills}
-                                    onChange={this.handleInputChange}
-                                    error={errors.skills}
-                                    info="Please use comma separated values (eg. HTML,CSS,JavaScript,Ruby)"
-                                />
-                                <FormGroupTextAreaField
-                                    name="bio"
-                                    value={this.state.bio}
-                                    onChange={this.handleInputChange}
-                                    error={errors.bio}
-                                    info="Tell us more about yourself"
-                                />
-                                <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
-                            </form>
-                        </Col>
-                    </Row>
-                </div>
-            </div>
+                            </FormGroup>
+
+                            <FormGroupTextAreaField
+                                name="bio"
+                                value={this.state.bio}
+                                onChange={this.handleInputChange}
+                                error={errors.bio}
+                                info="Tell us more about yourself"
+                            />
+                            <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
+                        </form>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
@@ -242,6 +245,7 @@ class EditProfile extends Component {
 EditProfile.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     createProfile: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     auth: PropTypes.object,
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
@@ -253,4 +257,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, createProfile })(withRouter(EditProfile));
+export default connect(mapStateToProps, { getCurrentProfile, createProfile, clearErrors })(withRouter(EditProfile));

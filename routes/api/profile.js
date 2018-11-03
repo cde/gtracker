@@ -13,7 +13,6 @@ const validateExperienceInput = require('../../utils/experience');
 
 
 // *** PROFILE ***
-
 // *** GET requests ****
 // @route GET api/profile
 // @desc Get current user profile
@@ -68,7 +67,7 @@ router.get('/user/:user_id', (req, res) => {
         .populate('user', ['username', 'avatar'])
         .then(profile => {
             if(!profile) {
-                errors.noProfile = "There are no profiles";
+                errors.noProfile = "There is no profile for this userId";
                 res.status(404).json(errors)
             }
             res.json(profile)
@@ -87,7 +86,7 @@ router.get('/all', (req, res) => {
             .populate('user', ['username', 'avatar'])
             .then(profile => {
                 if(!profile) {
-                    errors.noProfile = "There is no profile for this username";
+                    errors.noProfile = "There are no profiles";
                     res.status(404).json(errors)
                 }
                 res.json(profile)
@@ -141,42 +140,10 @@ router.post('/', passport.authenticate('jwt', { session: false}),
         console.log('2) profileFields => ', profileFields);
         Profile.findOne({ user: req.user.id }).then(profile => {
             if(profile) {
+                console.log('profile found', profile)
                 Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})
                     .then(profile => res.json(profile))
-            } else {
-                Profile.findOne({ username: profileFields.username }).then(profile => {
-                    if(profile) {
-                        errors.username = 'Username already exists';
-                        res.status(400).json(errors);
-                    }
-                    new Profile(profileFields).save().then(profile => res.json(profile));
-                })
-            }
-        })
-
-    }
-);
-
-
-router.post('/social', passport.authenticate('jwt', { session: false}),
-    (req, res) => {
-        const profileFields = {};
-        profileFields.user = req.user.id;
-        profileFields.username = req.user.username;
-
-        // Social
-        profileFields.social = {};
-        if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-        if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-        if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-        if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-        if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
-
-        console.log('profileFields ', profileFields);
-        Profile.findOne({ user: req.user.id }).then(profile => {
-            if(profile) {
-                Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true})
-                    .then(profile => res.json(profile))
+                    .catch(err => console.log(err))
             } else {
                 Profile.findOne({ username: profileFields.username }).then(profile => {
                     if(profile) {

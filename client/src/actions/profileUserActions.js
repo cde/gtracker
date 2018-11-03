@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import {GET_PROFILE, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER} from "./types";
+import {GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER} from "./types";
 
-// Get Current Profile
+// Get Current ProfileItem
 export const getCurrentProfile = () => dispatch => {
     dispatch(isProfileLoading());
     axios.get('api/profile')
@@ -28,7 +28,22 @@ export const createProfile = (profileData, history) => dispatch => {
         }))
 };
 
-// Delete User & Profile
+// Create / Edit Social Links
+export const addSocialLinks = (socialData, history) => dispatch => {
+    console.log('socialData => ', socialData)
+    axios
+        .post('api/profile', socialData)
+        .then(res => dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        }))
+        .catch(err => dispatch({
+            type: GET_PROFILES,
+            payload: null
+        }))
+};
+
+// Delete User & ProfileItem
 export const deleteAccount = () => dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         axios

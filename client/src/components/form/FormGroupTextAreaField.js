@@ -16,7 +16,7 @@ const FormGroupTextAreaField = ({
             <Label for={name}>{label}</Label>
             <Input
                 type="textarea"
-                className={classnames('form-control form-control-lg', {
+                className={classnames('form-control form-control-md', {
                     'is-invalid': error
                 })}
                 placeholder={placeholder}

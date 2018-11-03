@@ -48,19 +48,22 @@ class App extends Component {
             <Router>
               <div className="App">
                   <Navbar/>
-                  <Route exact path="/" component={Landing} />
-                  <Route exact path="/signup" component={SignUp}/>
-                  <Route exact path="/login" component={Login}/>
-                  <Switch>
-                      <PrivateRoute exact path="/workspace" component={Workspace}/>
-                  </Switch>
-                  <Switch>
-                      <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
-                  </Switch>
-                  <Switch>
-                      <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
-                  </Switch>
-                  <Footer/>
+                  <main className="main">
+                      <Route exact path="/" component={Landing} />
+                      <Route exact path="/signup" component={SignUp}/>
+                      <Route exact path="/login" component={Login}/>
+                      <Switch>
+                          <PrivateRoute exact path="/workspace" component={Workspace}/>
+                      </Switch>
+                      <Switch>
+                          <PrivateRoute exact path="/create-profile" component={CreateProfile}/>
+                      </Switch>
+                      <Switch>
+                          <PrivateRoute exact path="/edit-profile" component={EditProfile}/>
+                      </Switch>
+                      <Route exact path="/profiles" component={Profiles}/>
+                  </main>
+                  <Footer> super</Footer>
               </div>
             </Router>
       </Provider>

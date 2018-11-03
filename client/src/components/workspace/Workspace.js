@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getCurrentProfile} from "../../actions/profileUserActions";
+import { getCurrentProfile, deleteAccount} from "../../actions/profileUserActions";
 
 import PropTypes from 'prop-types';
 
@@ -31,8 +31,8 @@ class Workspace extends Component {
             if(Object.keys(profile).length > 0 ) {
                 workspaceContent = (
                     <div>
-                        <p className="lead text-muted"> Welcome
-                            <Link to={`/profile/${profile.username}`}> {profile.fullName}</Link>
+                        <p className="lead text-muted"> Welcome &nbsp;
+                            <Link className="dark-medium-orange" to={`/profile/${profile.username}`}> {profile.fullName}</Link>
                         </p>
                         <ProfileUserActions/>
                         <ButtonGroup className="mb-4" role="group" style={{ float: 'right', paddingLeft: '10px' }}>
@@ -55,18 +55,16 @@ class Workspace extends Component {
             }
         }
         return(
-            <div>
-                <Container>
-                    <Row>
-                        <Col md={12}>
-                            <h3 className="display-4">
-                                <i className="fas fa-warehouse "></i>
-                            </h3>
-                            {workspaceContent}
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <Container className="workspace">
+                <Row>
+                    <Col md={12}>
+                        <span className="display-4">
+                            <i className="fas fa-warehouse text-info"></i>
+                        </span>
+                        {workspaceContent}
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
@@ -83,4 +81,4 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 });
 
-export default connect(mapStateToProps, {getCurrentProfile})(Workspace);
+export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Workspace);

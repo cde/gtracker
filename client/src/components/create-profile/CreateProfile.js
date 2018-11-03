@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import SocialFields from '../common/SocialFields';
+import ProfileImage from '../common/ProfileImage';
 
 import { createProfile} from "../../actions/profileUserActions";
 
-
-import { Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, FormGroup } from 'reactstrap';
 
 import professionalStatus from "../common/professionalStatus";
 import SelectListGroup from "../form/SelectListGroup";
 import FormGroupField from './../form/FormGroupField';
 import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
+import InputIconGroup from "../form/InputIconGroup";
 
 class CreateProfile extends Component {
     state = {
@@ -71,38 +72,34 @@ class CreateProfile extends Component {
         const { errors, displaySocialFields } = this.state;
         const { user } = this.props.auth;
         let socialFields;
+
         if(displaySocialFields){
             socialFields =  (<SocialFields
+                full_name = {this.state.full_name}
+                skills = {this.state.skills}
+                status = {this.state.status}
                 errors = {errors}
-                // twitter = {this.state.twitter}
             />)
 
         }
         return (
-            <div>
-                <div className="container">
-                    <Row>
-                        <Col md={12}>
-                            <h1 className="display-6 text-md-center">Complete your Profile</h1>
-                        </Col>
-                    </Row>
-                    <Row>
+            <Container className="profile">
+                <Row>
+                    <Col md={12}>
+                        <h1 className="display-5 text-center dark-medium-orange">Complete your Profile</h1>
+                    </Col>
+                </Row>
+                <Row>
                         <Col md={4}>
-                            <img
-                                className="rounded"
-                                src={user.avatar}
-                                alt={user.username}
-                                style={{ width: '200px', marginRight: '5px' }}
-                                title= "Connect gravatar to your email to display an image"
-                            />
-                            <p>{user.username}</p>
-
+                            <ProfileImage user={user} />
                             <div className="mb-3">
                                 <Button className='btn-light' onClick={this.onClickSocialFields}>
-                                    <i className="fas fab fa-twitter text-info mr-1" />
-                                    Add Social Links
+                                    <i className="fas fab fa-twitter text-info-light-blue mr-1" />
+                                    <i className="fas fab fa-linkedin text-info-medium-blue mr-1" />
+                                    <i className="fas fab fa-instagram text-danger mr-1" />
+                                    <i className="fas fab fa-facebook-square text-info-dark-blue mr-1" />
                                 </Button>
-                                <span className="text-muted"> .. Optional</span>
+                                <small className="text-muted"> .. Optional</small>
                             </div>
                             {socialFields}
 
@@ -110,13 +107,22 @@ class CreateProfile extends Component {
                         <Col md={6}>
                             <form onSubmit={this.onSubmit}>
                                 <FormGroupField
-                                    label="Full Name"
-                                    placeholder="Name *"
+                                    label="Full name"
+                                    placeholder="* First and last name"
                                     name="full_name"
                                     value={this.state.full_name}
                                     onChange={this.handleInputChange}
                                     error={errors.full_name}
                                     info="Please provide your full name (First and Last Name)"
+                                />
+                                <FormGroupField
+                                    type="text"
+                                    placeholder="* Skills"
+                                    name="skills"
+                                    value={this.state.skills}
+                                    onChange={this.handleInputChange}
+                                    error={errors.skills}
+                                    info="Please use comma separated values (eg. HTML,CSS,JavaScript,Ruby)"
                                 />
 
                                 <SelectListGroup
@@ -139,6 +145,15 @@ class CreateProfile extends Component {
                                     info="Could be the one you work for or your own company"
                                 />
                                 <FormGroupField
+                                    type="text"
+                                    placeholder="Location (Ex: San Francisco, CA)"
+                                    name="company"
+                                    value={this.state.company}
+                                    onChange={this.handleInputChange}
+                                    error={errors.company}
+                                    info="Give us an idea of where you are located"
+                                />
+                                <FormGroupField
                                     placeholder="Website"
                                     name="website"
                                     type="text"
@@ -147,24 +162,18 @@ class CreateProfile extends Component {
                                     error={errors.website}
                                     info="Could be your own website"
                                 />
-                                <FormGroupField
-                                    type="text"
-                                    placeholder="Github Username"
-                                    name="githubusername"
-                                    value={this.state.githubusername}
-                                    onChange={this.handleInputChange}
-                                    error={errors.githubusername}
-                                    info="Github link, including your username"
-                                />
-                                <FormGroupField
-                                    type="text"
-                                    placeholder="* Skills"
-                                    name="skills"
-                                    value={this.state.skills}
-                                    onChange={this.handleInputChange}
-                                    error={errors.skills}
-                                    info="Please use comma separated values (eg. HTML,CSS,JavaScript,Ruby)"
-                                />
+                                <FormGroup className="mt-4">
+                                    <InputIconGroup
+                                        type="text"
+                                        placeholder="Github Username"
+                                        name="githubusername"
+                                        value={this.state.githubusername}
+                                        onChange={this.handleInputChange}
+                                        error={errors.githubusername}
+                                        info="Github link, including your username"
+                                        icon="fab fa-github"
+                                    />
+                                </FormGroup>
                                 <FormGroupTextAreaField
                                     name="bio"
                                     value={this.state.bio}
@@ -175,9 +184,8 @@ class CreateProfile extends Component {
                                 <Button type="submit" className="btn btn-lg btn-info-orange btn-block mt-4">Submit</Button>
                             </form>
                         </Col>
-                    </Row>
-                </div>
-            </div>
+                </Row>
+            </Container>
         )
     }
 }

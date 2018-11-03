@@ -36,7 +36,7 @@ class Navbar extends Component {
         const generalLinks = (
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link className="nav-link" to='/signup'>Sign Up</Link>
+                    <Link className="nav-link" to='/signup'> Sign Up </Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to='/login'>Login </Link>
@@ -44,7 +44,8 @@ class Navbar extends Component {
             </ul>
         );
         return (
-            <nav className="navbar navbar-expand-sm navbar-dark bg-orange mb-4">
+            <header>
+                <nav className="navbar navbar-expand-sm navbar-dark bg-orange mb-4">
                 <div className="container">
                     <Link className="navbar-brand" to="/">
                         Enlaces
@@ -63,7 +64,7 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to='/profiles'>
                                     {' '}
-                                    Coders
+                                    Feeds
                                 </Link>
                             </li>
                         </ul>
@@ -71,6 +72,7 @@ class Navbar extends Component {
                     </div>
                 </div>
             </nav>
+            </header>
         );
     }
 }
