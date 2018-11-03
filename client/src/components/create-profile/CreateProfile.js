@@ -15,6 +15,7 @@ import SelectListGroup from "../form/SelectListGroup";
 import FormGroupField from './../form/FormGroupField';
 import FormGroupTextAreaField from "../form/FormGroupTextAreaField";
 import InputIconGroup from "../form/InputIconGroup";
+import Breadcrumbs from "../common/Breadcrumbs";
 
 class CreateProfile extends Component {
     state = {
@@ -84,6 +85,7 @@ class CreateProfile extends Component {
         }
         return (
             <Container className="profile">
+                <Breadcrumbs goBack="Go Back" current="Create Profile" />
                 <Row>
                     <Col md={12}>
                         <h1 className="display-5 text-center dark-medium-orange">Complete your Profile</h1>

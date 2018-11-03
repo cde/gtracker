@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import {GET_PROFILE, GET_PROFILES, PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_ERRORS, SET_CURRENT_USER} from "./types";
+import {GET_PROFILE, GET_PROFILES,
+    PROFILE_LOADING, CLEAR_CURRENT_PROFILE,
+    GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS } from "./types";
 
 // Get Current ProfileItem
 export const getCurrentProfile = () => dispatch => {
@@ -43,6 +45,18 @@ export const addSocialLinks = (socialData, history) => dispatch => {
         }))
 };
 
+// Create Profile Experience
+export const addExperience = (experienceData, history) => dispatch => {
+    console.log('experienceData => ', experienceData);
+    axios
+        .post('/api/profile/experience', experienceData)
+        .then(res => history.push('/workspace') )
+        .catch(err => dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        }))
+};
+
 // Delete User & ProfileItem
 export const deleteAccount = () => dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
@@ -70,4 +84,11 @@ export const isProfileLoading = () => {
 
 export const clearCurrentProfile = () => {
     return { type: CLEAR_CURRENT_PROFILE }
+};
+
+// // Clear errors
+export const clearErrors = () => {
+    return {
+        type: CLEAR_ERRORS
+    };
 };

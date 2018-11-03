@@ -101,6 +101,10 @@ landing-login .enlace {
     border-color: #ff7400;
 }
 
+.btn .btn-info-orange:hover{
+    color: #ffa162;
+}
+
 .bg-dark-orange {
     background-color: #e14329;
 }
@@ -191,4 +195,12 @@ footer {
  /*Profile*/
 .profile .form-group {
     margin-bottom: 0px;
+}
+
+.profile  .date-range {
+    margin-top: 10px;
+}
+
+.profile .lead {
+    font-size: 1.0rem;
 }
