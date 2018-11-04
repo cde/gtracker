@@ -4,13 +4,13 @@ import { ButtonGroup } from 'reactstrap';
 
 const ProfileUserActions = () => {
     return (
-        <ButtonGroup className="mb-4" role="group">
+        <ButtonGroup className="mb-4 d-flex flex-row justify-content-end" role="group">
             <Link to="/edit-profile" className="btn btn-light">
                 <i className="fas fa-user-circle text-info mr-1" /> Edit Profile
             </Link>
-            <Link to="/add-experience" className="btn btn-light">
+            <Link to="/add-tool" className="btn btn-light">
                 <i className="fab fa-font-awesome text-info mr-1"></i>
-                Add Your stack tools
+                Add favorite tools
             </Link>
             <Link to="/add-experience" className="btn btn-light">
                 <i className="fab fa-black-tie text-info mr-1" />

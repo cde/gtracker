@@ -10,6 +10,7 @@ import Spinner from '../misc/Spinner';
 import { Container, Row, Col, ButtonGroup, Button } from 'reactstrap';
 import ProfileUserActions from "./ProfileUserActions";
 import Experiences from "./Experiences";
+import YourPopularTools from "./YourPopularTools";
 
 class Workspace extends Component {
 
@@ -32,10 +33,11 @@ class Workspace extends Component {
             if(Object.keys(profile).length > 0 ) {
                 workspaceContent = (
                     <div>
-                        <p className="lead text-muted"> Welcome &nbsp;
+                        <div className="d-inline-flex lead text-muted" style={{  float: 'left' }}> Welcome &nbsp;
                             <Link className="dark-medium-orange" to={`/profile/${profile.username}`}> {profile.fullName}</Link>
-                        </p>
+                        </div>
                         <ProfileUserActions/>
+                        <YourPopularTools tools={profile.tools}/>
                         <Experiences experiences={profile.experience }/>
                         <ButtonGroup className="mb-4" role="group" style={{ float: 'left', paddingLeft: '10px' }}>
                             <Button onClick={this.onDeleteClick}className="btn btn-danger">
@@ -48,7 +50,7 @@ class Workspace extends Component {
             }else {
                 workspaceContent = (
                     <div>
-                        <p className="lead text-muted">Welcome {user.username}</p>
+                        <p className="d-inline-flex lead text-muted">Welcome {user.username}</p>
                         <p> You haven't setup a profile yet. We would love to know you better. Please add some info.</p>
 
                         <Link to="/create-profile" className="btn btn-lg btn-info-orange">Create Profile</Link>

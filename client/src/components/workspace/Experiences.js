@@ -40,7 +40,7 @@ class Experiences extends Component {
         ));
         return (
             <Container>
-                <h4 className="mb-4">Experience</h4>
+                <h5 className="mb-4"> <i className="fab fa-black-tie text-info mr-1" />Experience</h5>
                 <Table >
                     <thead>
                     <tr>

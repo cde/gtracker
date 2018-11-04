@@ -10,6 +10,7 @@ const Profile = require("../../models/Profile");
 // Validations
 const validateProfileInput = require('../../utils/profile');
 const validateExperienceInput = require('../../utils/experience');
+const validateToolInput = require('../../utils/tool');
 
 
 // *** PROFILE ***
@@ -85,6 +86,7 @@ router.get('/all', (req, res) => {
         Profile.find({})
             .populate('user', ['username', 'avatar'])
             .then(profile => {
+                console.log(profile);
                 if(!profile) {
                     errors.noProfile = "There are no profiles";
                     res.status(404).json(errors)
@@ -230,12 +232,44 @@ router.delete('/experience/:experience_id', passport.authenticate('jwt', { sessi
 );
 
 
-// *** EDUCATION ***
+// *** TOOLS ***
+// @route   POST api/profile/tools
+// @desc    Add education to profile
+// @access  Private
+router.post('/tools', passport.authenticate('jwt', { session: false }),
+    (req, res) => {
 
+
+        console.log(req.body)
+
+        const { errors, isValid } = validateToolInput(req.body);
+
+        // Check Validation
+        if (!isValid) {
+            // Return any errors with 400 status
+            return res.status(400).json(errors);
+        }
+
+        Profile.findOne({ user: req.user.id }).then(profile => {
+            const newTool = {
+                name: req.body.name,
+                url: req.body.url,
+                description: req.body.description,
+                image: req.body.image
+            };
+
+            // Add to exp array
+            profile.tools.unshift(newTool);
+
+            profile.save().then(profile => res.json(profile));
+        });
+    }
+);
+
+// *** EDUCATION ***
 // @route   POST api/profile/education
 // @desc    Add education to profile
 // @access  Private
-
 router.post('/education', passport.authenticate('jwt', { session: false }),
     (req, res) => {
 
@@ -256,8 +290,6 @@ router.post('/education', passport.authenticate('jwt', { session: false }),
         });
     }
 );
-
-
 router.delete('/education/:education_id', passport.authenticate('jwt', { session: false }),
     (req, res) => {
 

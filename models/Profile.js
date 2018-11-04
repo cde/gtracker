@@ -84,8 +84,17 @@ const ProfileSchema = new Schema({
             type: String
         }
     },
-    createAt: { type: Date, default: Date.now() }
+    createAt: { type: Date, default: Date.now() },
 
+    tools: [
+        {
+            name: { type: String, required: true },
+            description: { type: String },
+            url: { type: String },
+            image: { type: String }
+        }
+    ]
 });
+
 const Profile = mongoose.model('profiles', ProfileSchema);
 module.exports = Profile;

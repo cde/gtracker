@@ -1,0 +1,13 @@
+.popular-tools .tool {
+    display: flex;
+    position: relative;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    min-height: 32px;
+}
+
+.popular-tools .tool .logo {
+    height: 24px;
+    width: 24px;
+}

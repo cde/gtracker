@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Breadcrumbs from "../common/Breadcrumbs";
 import Spinner from '../misc/Spinner';
 import ProfileItem from './ProfileItem';
 import { getProfiles } from '../../actions/profileUserActions';
 
-import { Container, Row, Col } from 'reactstrap';
 
+import { Container, Row, Col } from 'reactstrap';
 
 class Profiles extends Component {
 
     componentDidMount() {
         this.props.getProfiles();
+        console.log(this.props)
     }
 
     render() {
@@ -33,14 +35,12 @@ class Profiles extends Component {
         return (
             <div className="profiles">
                 <Container>
+                    <Breadcrumbs goBack="Go Back" current="Profiles" />
                     <Row>
                         <Col md={12}>
-                            <h1 className="display-4 text-center">Developer Profiles</h1>
-                            <p className="lead text-center">
-                                Browse and connect with developers
-                            </p>
-                            {profileItems}
+                            <h3 className="display-5 text-center dark-medium-orange">Checkout some profiles</h3>
                         </Col>
+                        {profileItems}
                     </Row>
                 </Container>
             </div>

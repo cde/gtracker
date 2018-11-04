@@ -117,7 +117,7 @@ class EditProfile extends Component {
             website: this.state.website
         };
         this.props.createProfile(profile, this.props.history);
-
+        
     };
 
     onClickSocialFields =(event)=> {

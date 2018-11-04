@@ -19,17 +19,36 @@ export const getCurrentProfile = () => dispatch => {
 };
 
 // Get all Profiles
+// export const getProfiles = () => dispatch => {
+//     dispatch(isProfileLoading());
+//     axios.get('api/profile/all')
+//         .then(res => dispatch({
+//             type: GET_PROFILES,
+//             payload: res.data
+//         }))
+//         .catch(err => dispatch({
+//             type: GET_PROFILES,
+//             payload: null
+//         }))
+// };
+
+// Get all profiles
 export const getProfiles = () => dispatch => {
-    dispatch(isProfileLoading());
-    axios.get('api/profiles/all')
-        .then(res => dispatch({
-            type: GET_PROFILES,
-            payload: res.data
-        }))
-        .catch(err => dispatch({
-            type: GET_PROFILES,
-            payload: null
-        }))
+    // dispatch(isProfileLoading());
+    axios
+        .get('api/profile/all')
+        .then(res =>
+            dispatch({
+                type: GET_PROFILES,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_PROFILES,
+                payload: null
+            })
+        );
 };
 
 
@@ -90,6 +109,17 @@ export const deleteExperience = id => dispatch => {
         );
 };
 
+// Create Profile Favorite Tools
+export const addTools = (toolData, history) => dispatch => {
+    console.log('toolData => ', toolData);
+    axios
+        .post('/api/profile/tools', toolData)
+        .then(res => history.push('/workspace') )
+        .catch(err => dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        }))
+};
 
 // Delete User & ProfileItem
 export const deleteAccount = () => dispatch => {

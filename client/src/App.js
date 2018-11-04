@@ -20,6 +20,8 @@ import Workspace from "./components/workspace/Workspace";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import ProfileExperience from "./components/profile-experience/ProfileExperience";
+import ProfileTools from "./components/profile-favorites/Tools";
+import Profiles from "./components/profiles/Profiles";
 
 import './App.css';
 
@@ -53,6 +55,7 @@ class App extends Component {
                       <Route exact path="/" component={Landing} />
                       <Route exact path="/signup" component={SignUp}/>
                       <Route exact path="/login" component={Login}/>
+                      <Route exact path="/profiles" component={Profiles} />
                       <Switch>
                           <PrivateRoute exact path="/workspace" component={Workspace}/>
                       </Switch>
@@ -64,6 +67,9 @@ class App extends Component {
                       </Switch>
                       <Switch>
                           <PrivateRoute exact path="/add-experience" component={ProfileExperience}/>
+                      </Switch>
+                      <Switch>
+                          <PrivateRoute exact path="/add-tool" component={ProfileTools}/>
                       </Switch>
                   </main>
                   <Footer> super</Footer>
