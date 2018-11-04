@@ -18,7 +18,22 @@ export const getCurrentProfile = () => dispatch => {
     }))
 };
 
-// Create Profile
+// Get all Profiles
+export const getProfiles = () => dispatch => {
+    dispatch(isProfileLoading());
+    axios.get('api/profiles/all')
+        .then(res => dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        }))
+        .catch(err => dispatch({
+            type: GET_PROFILES,
+            payload: null
+        }))
+};
+
+
+// Create / Edit Profile
 export const createProfile = (profileData, history) => dispatch => {
     console.log('profileData => ', profileData)
     axios
@@ -56,6 +71,25 @@ export const addExperience = (experienceData, history) => dispatch => {
             payload: err.response.data
         }))
 };
+
+// Delete Experience
+export const deleteExperience = id => dispatch => {
+    axios
+        .delete(`/api/profile/experience/${id}`)
+        .then(res =>
+            dispatch({
+                type: GET_PROFILE,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
 
 // Delete User & ProfileItem
 export const deleteAccount = () => dispatch => {

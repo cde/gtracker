@@ -23,7 +23,7 @@ router.get(
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         const errors = {};
-        console.log('get/profile',req.user.id);
+        console.log('get/profile', req.user);
         Profile.findOne({ user: req.user.id })
             .populate('user', ['username', 'avatar'])
             .then(profile => {
@@ -216,13 +216,11 @@ router.post('/experience', passport.authenticate('jwt', { session: false }),
 
 router.delete('/experience/:experience_id', passport.authenticate('jwt', { session: false }),
     (req, res) => {
+
+        console.log(req.params.experience_id);
         Profile.findOne({ user: req.user.id }).then(profile => {
 
-            const removeIndex = profile.experience;
-            console.log(removeIndex);
-            removeIndex
-                .map(item => item.id)
-                .indexOf(req.params.experience_id)
+            profile.experience.pull({ _id: req.params.experience_id })
             profile.save()
                 .then(profile => res.json(profile))
 

@@ -9,6 +9,7 @@ import Spinner from '../misc/Spinner';
 
 import { Container, Row, Col, ButtonGroup, Button } from 'reactstrap';
 import ProfileUserActions from "./ProfileUserActions";
+import Experiences from "./Experiences";
 
 class Workspace extends Component {
 
@@ -18,7 +19,7 @@ class Workspace extends Component {
 
     onDeleteClick = (event) => {
         this.props.deleteAccount();
-    }
+    };
 
     render() {
         const { user } = this.props.auth;
@@ -35,7 +36,8 @@ class Workspace extends Component {
                             <Link className="dark-medium-orange" to={`/profile/${profile.username}`}> {profile.fullName}</Link>
                         </p>
                         <ProfileUserActions/>
-                        <ButtonGroup className="mb-4" role="group" style={{ float: 'right', paddingLeft: '10px' }}>
+                        <Experiences experiences={profile.experience }/>
+                        <ButtonGroup className="mb-4" role="group" style={{ float: 'left', paddingLeft: '10px' }}>
                             <Button onClick={this.onDeleteClick}className="btn btn-danger">
                                 <i className="fas fa-user-times"></i> Delete My Account
                             </Button>

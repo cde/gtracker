@@ -7,6 +7,7 @@ import { createUser } from '../../actions/authActions';
 
 import FormGroupField from './../form/FormGroupField';
 import { Container, Row, Col, Button } from 'reactstrap';
+import SocialSignup from './SocialSignup'
 
 class Signup extends Component {
     state = {

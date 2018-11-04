@@ -29,14 +29,33 @@ const ProfileSchema = new Schema({
     },
     experience: [
         {
-            title:  { type: String, required: true },
-            company:  { type: String, required: true },
-            location: {type: String },
-            from: { type: Date },
-            to: { type: Date },
-            current: { type: Boolean, default: false },
-            description: { type: String }
-    } ],
+            title: {
+                type: String,
+                required: true
+            },
+            company: {
+                type: String,
+                required: true
+            },
+            location: {
+                type: String
+            },
+            from: {
+                type: Date,
+                required: true
+            },
+            to: {
+                type: Date
+            },
+            current: {
+                type: Boolean,
+                default: false
+            },
+            description: {
+                type: String
+            }
+        }
+    ],
     education: [
         {
             school:  { type: String },

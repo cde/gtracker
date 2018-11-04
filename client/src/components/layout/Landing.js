@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {Link} from 'react-router-dom';
-
+import { Container, Row, Col } from 'reactstrap';
+// import Feature from './Feature'
 
 class Landing extends Component {
     componentDidMount() {
@@ -16,9 +16,9 @@ class Landing extends Component {
         return (
             <div className="landing">
                 <div className="dark-overlay landing-inner text-light">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12 text-center">
+                    <Container>
+                        <Row>
+                            <Col md={12} className="text-center">
                                 <div className="enlace">
                                     <h1 className="display-3 mb-4">Coders Enlace</h1>
                                     <p className="lead ">
@@ -30,10 +30,9 @@ class Landing extends Component {
                                     </p>
                                 </div>
                                 <hr/>
-
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
             </div>
         );
